@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<title>Rebane's Discord Colored Text Generator</title>
+<meta charset="UTF-8">
+<meta name="description" content="Rebane's Discord Colored Text Generator">
+<meta name="author" content="rebane2001">
+<style>
+    html {
+        font-family: sans-serif;
+        background: linear-gradient(135deg, #2aa198, #268bd2);
+        text-align: center;
+        color: #FFF;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .button {
+        min-height: 40px;
+        min-width: 40px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #4f545c;
+        font-size: 16px;
+        padding: 8px 20px;
+        cursor: pointer;
+        transition: all 300ms ease;
+    }
+
+    .button:hover {
+        background-color: #3BA55D;
+        transform: scale(1.05);
+    }
+
+    #textarea {
+        width: 50%;
+        height: 120px;
+        border-radius: 8px;
+        resize: both;
+        overflow: auto;
+        text-align: left;
+        font-family: monospace;
+        background-color: #2F3136;
+        color: #B9BBBE;
+        border: #202225 1px solid;
+        padding: 10px;
+        display: inline-block;
+        white-space: pre-wrap;
+        font-size: 1rem;
+        line-height: 1.4rem;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    #textarea:focus {
+        outline: none;
+        box-shadow: 0 0 10px #00AFF4;
+    }
+
+    .tooltip {
+        display: none;
+        position: absolute;
+        background-color: #3BA55D;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 14px;
+        padding: 8px 16px;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .title-animated {
+        font-size: 2rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, #FFD700, #FF4500, #32CD32);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { text-shadow: 0 0 5px #FFF; }
+        to { text-shadow: 0 0 15px #FFD700; }
+    }
+</style>
+</head>
+<body>
+<h1 class="title-animated">Discord Colored Text Generator</h1>
+<div class="container">
+<h3>About</h3>
+<p>This Discord Colored Text Generator allows you to create stylized and colored messages using Discord's syntax highlighting.</p>
+<p>Simply enter your text, choose a formatting style, and generate a Discord-compatible colored message.</p>
+</div>
+<h2>Create your text</h2>
+<body>
+    <button data-ansi="0" class="button">Reset</button>
+    <button data-ansi="1" class="button">Bold</button>
+    <button data-ansi="4" class="button">Underline</button>
+    <br><br>
+<div class="flex">
+    <div id="textarea" contenteditable="true">Welcome to <span class="ansi-33">Hunter</span>'s <span class="ansi-33">Discord!</span></div>
+</div>
+<br>
+<button class="button copy">Copy text as Discord formatted</button>
+<br><br>
+<script>
+    const copybtn = document.querySelector(".button.copy");
+    let copyCount = 0;
+    let copyTimeout = null;
+    
+    copybtn.onclick = () => {
+        navigator.clipboard.writeText(document.querySelector("#textarea").innerText).then(() => {
+            if (copyTimeout) clearTimeout(copyTimeout);
+            const messages = ["Copied!", "Double Copy!", "Triple Copy!", "Dominating!!", "Rampage!!", "Mega Copy!!"];
+            copybtn.style.backgroundColor = (copyCount <= 5) ? "#3BA55D" : "#ED4245";
+            copybtn.innerText = messages[Math.min(copyCount, messages.length - 1)];
+            copyCount = Math.min(messages.length, copyCount + 1);
+            copyTimeout = setTimeout(() => {
+                copyCount = 0;
+                copybtn.style.backgroundColor = null;
+                copybtn.innerText = "Copy text as Discord formatted";
+            }, 2000);
+        });
+    }
+</script>
+</body>
+</html>
